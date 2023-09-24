@@ -5,32 +5,30 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.teste.api.dto.PagamentoDTO;
-import com.teste.api.model.PagamentosModel;
+import com.teste.api.model.PagamentoModel;
 import com.teste.api.repository.PagamentosRepository;
+import com.teste.api.services.PagamentosService;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
 
-
 @RestController
 @RequestMapping("api/hello")
 public class PagamentosController {
 
-       @Autowired
-    private PagamentosRepository repository;
+    @Autowired
+    private PagamentosService service;
 
     @GetMapping
-    public List<PagamentosModel> listarPagamentos() {
-        return repository.findAll();
+    public List<PagamentoModel> listarPagamentos() {
+        return service.listarPagamentos();
     }
 
     @PostMapping
-    public void salvarPagamento(@RequestBody PagamentoDTO req) {
-
-        repository.save(new PagamentosModel(req));
-        System.out.println("entrou no post");
+    public void criarPagamento(@RequestBody PagamentoDTO req) {
+        service.criarPagamento(req);
     }
 
 }

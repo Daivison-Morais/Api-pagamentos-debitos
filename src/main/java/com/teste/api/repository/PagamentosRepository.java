@@ -2,8 +2,8 @@ package com.teste.api.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.teste.api.model.PagamentosModel;
+import com.teste.api.model.PagamentoModel;
 
-public interface PagamentosRepository extends JpaRepository<PagamentosModel, Long>{
+public interface PagamentosRepository extends JpaRepository<PagamentoModel, Long>{
     
 }

@@ -13,9 +13,9 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @Entity
-public class PagamentosModel {
+public class PagamentoModel {
 
-    public PagamentosModel(PagamentoDTO data) {
+    public PagamentoModel(PagamentoDTO data) {
         this.codigoDebito = data.codigoDebito();
         this.cpfCnpj = data.cpfCnpj();
         this.metodoPagamento = data.metodoPagamento();
