@@ -2,12 +2,13 @@ package com.teste.api.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
-
 import com.teste.api.dto.PagamentoDTO;
+import com.teste.api.dto.ProcessamentoDTO;
 import com.teste.api.model.PagamentoModel;
-import java.util.List;
+import com.teste.api.model.enums.StatusPagamento;
+import com.teste.api.model.enums.TipoDocPagador;
 
+import java.util.List;
 import com.teste.api.repository.PagamentosRepository;
 
 @Service
@@ -20,9 +21,47 @@ public class PagamentosService {
         return repository.findAll();
     }
 
+    public List<PagamentoModel> listarPorCodigoDebito(String codigoDebito) {
+        return repository.findByCodigoDebito(codigoDebito);
+    }
+
+    public List<PagamentoModel> listarPorCpfCnpj(String cpfcnpj) {
+        return repository.findByTipoDocPagador(cpfcnpj);
+    }
+
+    public List<PagamentoModel> listarPorStatus(StatusPagamento statusPagamento) {
+        return repository.findByStatusPagamento(statusPagamento);
+    }
+
     public void criarPagamento(PagamentoDTO req) {
 
         repository.save(new PagamentoModel(req));
+    }
+
+    public void deletarPagamento(Long id) {
+        // PagamentoModel dadosPagamentos = repository.findById(id);
+        /*
+         * if (id == null || !) {
+         * throw new Error("error");
+         * }
+         */
+
+        repository.deleteById(id);
+    }
+
+    public void atualizarPagamento(Long id, ProcessamentoDTO req) {
+
+        /*
+         * System.out.println(repository.findById(id).map((dado) -> {
+         * dado.setCodigoDebito(dado.getCodigoDebito());
+         * dado.setCpfCnpj(dado.getCpfCnpj());
+         * dado.setMetodoPagamento(dado.getMetodoPagamento());
+         * dado.setNumeroCartao(dado.getNumeroCartao());
+         * dado.setStatusPagamento("processado com sucesso");
+         * 
+         * }));
+         */
+
     }
 
 }
