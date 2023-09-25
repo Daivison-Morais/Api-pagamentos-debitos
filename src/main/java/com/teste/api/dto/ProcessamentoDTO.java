@@ -1,5 +1,8 @@
 package com.teste.api.dto;
 
-public class ProcessamentoDTO {
-    String novoStatus;
+import com.teste.api.model.enums.StatusPagamento;
+
+public record ProcessamentoDTO(
+        Long id,
+        StatusPagamento statusPagamento) {
 }

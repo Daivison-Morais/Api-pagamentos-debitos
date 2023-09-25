@@ -1,5 +1,6 @@
 package com.teste.api.controller;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,16 +16,14 @@ import org.springframework.http.ResponseEntity;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
-
 import com.teste.api.controller.config.response.ResponseHandler;
 import com.teste.api.dto.PagamentoDTO;
 import com.teste.api.dto.ProcessamentoDTO;
 import com.teste.api.model.PagamentoModel;
 import com.teste.api.model.enums.StatusPagamento;
-import com.teste.api.model.enums.TipoDocPagador;
 import com.teste.api.services.PagamentosService;
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("api/pagamento")
 public class PagamentosController {
