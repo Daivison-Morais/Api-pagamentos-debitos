@@ -12,7 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import com.teste.api.controller.config.response.ResponseHandler;
@@ -77,8 +79,20 @@ public class PagamentosController {
     }
 
     @DeleteMapping("/{id}")
-    public void deletarPagamento(@PathVariable Long id) {
-        services.deletarPagamento(id);
+    public ResponseEntity<Object> deletarPagamentoPorId(@PathVariable Long id) {
+
+        try {
+            PagamentoModel pagamento = services.deletarPagamento(id);
+
+            return ResponseHandler.responseBuilder("Pagamento deletado com sucesso!", HttpStatus.OK, pagamento);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Map<String, String> error = new HashMap<>();
+
+            error.put("error", e.getMessage());
+            return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+        }
+
     }
 
 }
