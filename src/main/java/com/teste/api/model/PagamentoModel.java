@@ -1,11 +1,8 @@
 package com.teste.api.model;
 
-import org.antlr.v4.runtime.misc.NotNull;
-
 import com.teste.api.dto.PagamentoDTO;
 import com.teste.api.model.enums.MetodoPagamento;
 import com.teste.api.model.enums.StatusPagamento;
-
 import jakarta.annotation.Nullable;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -30,7 +27,6 @@ public class PagamentoModel {
         this.metodoPagamento = data.metodoPagamento();
         this.valorPagamento = data.valorPagamento();
         this.numeroCartao = data.numeroCartao();
-        this.statusPagamento = data.statusPagamento();
     }
 
     @Id

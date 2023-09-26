@@ -7,18 +7,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import com.teste.api.controller.config.response.ResponseHandler;
 import com.teste.api.dto.PagamentoDTO;
-import com.teste.api.dto.ProcessamentoDTO;
 import com.teste.api.model.PagamentoModel;
 import com.teste.api.model.enums.StatusPagamento;
 import com.teste.api.services.PagamentosService;
@@ -81,11 +78,6 @@ public class PagamentosController {
             return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
         }
 
-    }
-
-    @PutMapping("/{id}")
-    public void atualizarPagamento(@PathVariable Long id, @RequestBody ProcessamentoDTO req) {
-        services.atualizarPagamento(id, req);
     }
 
     @DeleteMapping("/{id}")

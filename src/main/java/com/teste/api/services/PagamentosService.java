@@ -3,15 +3,11 @@ package com.teste.api.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-
 import com.teste.api.controller.config.exception.ApiExceptionMessage;
 import com.teste.api.dto.PagamentoDTO;
-import com.teste.api.dto.ProcessamentoDTO;
 import com.teste.api.model.PagamentoModel;
 import com.teste.api.model.enums.MetodoPagamento;
 import com.teste.api.model.enums.StatusPagamento;
-import com.teste.api.model.enums.TipoDocPagador;
-
 import java.util.List;
 import com.teste.api.repository.PagamentosRepository;
 import com.teste.api.utils.VerificaCpfCnpj;
@@ -48,14 +44,25 @@ public class PagamentosService {
         }
 
         MetodoPagamento metodoPagamento = req.metodoPagamento();
-        if (metodoPagamento.toString().equals("CARTAO_CREDITO") || metodoPagamento.toString().equals("CARTAO_DEBITO")) {
-            if (req.numeroCartao() == null || req.numeroCartao().equals("")) {
-                throw new ApiExceptionMessage(HttpStatus.BAD_REQUEST, "É necessário número de cartão válido!");
-
-            }
+        if (metodoPagamento.toString().equals("CARTAO_CREDITO") || metodoPagamento.toString().equals("CARTAO_DEBITO")
+                && (req.numeroCartao() == null || req.numeroCartao().equals(""))) {
+            throw new ApiExceptionMessage(HttpStatus.BAD_REQUEST, "É necessário número de cartão válido!");
         }
 
-        return repository.save(new PagamentoModel(req));
+        if (req.numeroCartao() != null) {
+            throw new ApiExceptionMessage(HttpStatus.BAD_REQUEST,
+                    "Não é permitido número de cartão para este metodo de pagamento!");
+        }
+
+        PagamentoModel pagamento = new PagamentoModel();
+        pagamento.setCodigoDebito(req.codigoDebito());
+        pagamento.setTipoDocPagador(req.tipoDocPagador());
+        pagamento.setMetodoPagamento(req.metodoPagamento());
+        pagamento.setValorPagamento(req.valorPagamento());
+        pagamento.setNumeroCartao(req.numeroCartao());
+        pagamento.setStatusPagamento(StatusPagamento.PENDENTE);
+
+        return repository.save(pagamento);
     }
 
     public PagamentoModel deletarPagamento(Long id) throws ApiExceptionMessage {
@@ -65,32 +72,14 @@ public class PagamentosService {
             throw new ApiExceptionMessage(HttpStatus.BAD_REQUEST, "ID não encontrado");
         }
 
-        System.out.println(pagamento.getStatusPagamento());
         if (!"PENDENTE".equals(pagamento.getStatusPagamento().toString())) {
             throw new ApiExceptionMessage(HttpStatus.BAD_REQUEST,
                     "Somente pagamentos pendentes podem ser deletados.");
         }
 
-        System.out.println(pagamento.getStatusPagamento());
-
         repository.deleteById(id);
 
         return pagamento;
-    }
-
-    public void atualizarPagamento(Long id, ProcessamentoDTO req) {
-
-        /*
-         * System.out.println(repository.findById(id).map((dado) -> {
-         * dado.setCodigoDebito(dado.getCodigoDebito());
-         * dado.setCpfCnpj(dado.getCpfCnpj());
-         * dado.setMetodoPagamento(dado.getMetodoPagamento());
-         * dado.setNumeroCartao(dado.getNumeroCartao());
-         * dado.setStatusPagamento("processado com sucesso");
-         * 
-         * }));
-         */
-
     }
 
 }
