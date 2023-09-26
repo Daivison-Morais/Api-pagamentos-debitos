@@ -44,14 +44,16 @@ public class PagamentosService {
         }
 
         MetodoPagamento metodoPagamento = req.metodoPagamento();
-        if (metodoPagamento.toString().equals("CARTAO_CREDITO") || metodoPagamento.toString().equals("CARTAO_DEBITO")
-                && (req.numeroCartao() == null || req.numeroCartao().equals(""))) {
-            throw new ApiExceptionMessage(HttpStatus.BAD_REQUEST, "É necessário número de cartão válido!");
-        }
+        if (metodoPagamento.toString().equals("CARTAO_CREDITO") || metodoPagamento.toString().equals("CARTAO_DEBITO")) {
+            if (req.numeroCartao() == null || req.numeroCartao().equals("")) {
+                throw new ApiExceptionMessage(HttpStatus.BAD_REQUEST, "É necessário número de cartão válido!");
 
-        if (req.numeroCartao() != null) {
-            throw new ApiExceptionMessage(HttpStatus.BAD_REQUEST,
-                    "Não é permitido número de cartão para este metodo de pagamento!");
+            }
+        } else {
+            if (req.numeroCartao() != null) {
+                throw new ApiExceptionMessage(HttpStatus.BAD_REQUEST, "Não é necessário número de cartão!");
+
+            }
         }
 
         PagamentoModel pagamento = new PagamentoModel();
