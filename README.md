@@ -172,7 +172,7 @@ Clone o projeto
 Navegue até o Diretório do Projeto
 
 ```bash
-  cd test-Tecnico-fadesp/
+  cd Api-pagamentos-debitos/
 ```
 
 
