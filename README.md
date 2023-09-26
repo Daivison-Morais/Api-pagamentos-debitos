@@ -1,8 +1,6 @@
 # API Pagamentos de Debitos  cd test-Tecnico-fadesp/
 
-Proposta de desafio técnico que propõe o desenvolvimento de uma API que permiti a recepção de pagamentos de dívidas tanto de indivíduos como de empresas.
-
-
+Este projeto é um desafio técnico que propõe o desenvolvimento de uma API que permiti a recepção e pagamentos de dívidas tanto de pessoa física como de pessoa jurídica.
 
 
 ## Features
