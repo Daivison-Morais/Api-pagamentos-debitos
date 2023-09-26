@@ -19,7 +19,7 @@ public class AtualizaPagamentoService {
         StatusPagamento statusPreAtualizacao = pagamento.getStatusPagamento();
 
         if (statusPreAtualizacao == StatusPagamento.SUCESSO) {
-            throw new ApiExceptionMessage(HttpStatus.BAD_REQUEST, "Atualização não permitida!");
+            throw new ApiExceptionMessage(HttpStatus.BAD_REQUEST, "O Status já está como sucesso!");
 
         } else if (statusPreAtualizacao == StatusPagamento.FALHA) {
 

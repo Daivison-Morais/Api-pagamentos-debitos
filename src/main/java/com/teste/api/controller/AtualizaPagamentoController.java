@@ -17,7 +17,7 @@ import com.teste.api.model.PagamentoModel;
 import com.teste.api.services.AtualizaPagamentoService;
 
 @RestController
-@RequestMapping("/api/processamneto")
+@RequestMapping("/api/processamento")
 @CrossOrigin(origins = "*")
 public class AtualizaPagamentoController {
 

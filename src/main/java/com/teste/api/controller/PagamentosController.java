@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,8 +30,11 @@ public class PagamentosController {
     public PagamentosService services;
 
     @GetMapping
-    public List<PagamentoModel> listarPagamentos() {
-        return services.listarPagamentos();
+    public ResponseEntity<Object> listarPagamentos() {
+        List<PagamentoModel> pagamento = services.listarPagamentos();
+
+        return ResponseHandler.responseBuilder("Todos os pagamentos listados com sucesso!", HttpStatus.OK,
+                pagamento);
     }
 
     @GetMapping("filtro-codigoDebito/{codigoDebito}")
@@ -38,7 +42,7 @@ public class PagamentosController {
 
         List<PagamentoModel> pagamentos = services.listarPorCodigoDebito(codigoDebito);
 
-        return ResponseHandler.responseBuilder("Pagamentos por código débito filtrados com sucesso", HttpStatus.OK,
+        return ResponseHandler.responseBuilder("Pagamentos filtrados com sucesso", HttpStatus.OK,
                 pagamentos);
 
     }
@@ -48,7 +52,7 @@ public class PagamentosController {
 
         List<PagamentoModel> pagamentos = services.listarPorCpfCnpj(cpfCnpj);
 
-        return ResponseHandler.responseBuilder("Pagamentos por código débito filtrados com sucesso", HttpStatus.OK,
+        return ResponseHandler.responseBuilder("Pagamentos filtrados com sucesso", HttpStatus.OK,
                 pagamentos);
 
     }
@@ -58,7 +62,7 @@ public class PagamentosController {
 
         List<PagamentoModel> pagamentos = services.listarPorStatus(statusPagamento);
 
-        return ResponseHandler.responseBuilder("Pagamentos por código débito filtrados com sucesso", HttpStatus.OK,
+        return ResponseHandler.responseBuilder("Pagamentos filtrados com sucesso", HttpStatus.OK,
                 pagamentos);
 
     }
@@ -69,7 +73,7 @@ public class PagamentosController {
         try {
             PagamentoModel pagamento = services.criarPagamento(req);
 
-            return ResponseHandler.responseBuilder("Pagamento criado com sucesso!", HttpStatus.OK, pagamento);
+            return ResponseHandler.responseBuilder("Pagamento cadastrado com sucesso!", HttpStatus.CREATED, pagamento);
         } catch (Exception e) {
             e.printStackTrace();
             Map<String, String> error = new HashMap<>();
