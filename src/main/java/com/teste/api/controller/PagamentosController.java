@@ -67,9 +67,20 @@ public class PagamentosController {
     }
 
     @PostMapping
-    public void criarPagamento(@RequestBody PagamentoDTO req) {
-        System.out.println("entrou no POST");
-        services.criarPagamento(req);
+    public ResponseEntity<Object> criarPagamento(@RequestBody PagamentoDTO req) {
+
+        try {
+            PagamentoModel pagamento = services.criarPagamento(req);
+
+            return ResponseHandler.responseBuilder("Pagamento criado com sucesso!", HttpStatus.OK, pagamento);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Map<String, String> error = new HashMap<>();
+
+            error.put("error", e.getMessage());
+            return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+        }
+
     }
 
     @PutMapping("/{id}")

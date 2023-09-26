@@ -8,11 +8,13 @@ import com.teste.api.controller.config.exception.ApiExceptionMessage;
 import com.teste.api.dto.PagamentoDTO;
 import com.teste.api.dto.ProcessamentoDTO;
 import com.teste.api.model.PagamentoModel;
+import com.teste.api.model.enums.MetodoPagamento;
 import com.teste.api.model.enums.StatusPagamento;
 import com.teste.api.model.enums.TipoDocPagador;
 
 import java.util.List;
 import com.teste.api.repository.PagamentosRepository;
+import com.teste.api.utils.VerificaCpfCnpj;
 
 @Service
 public class PagamentosService {
@@ -36,9 +38,24 @@ public class PagamentosService {
         return repository.findByStatusPagamento(statusPagamento);
     }
 
-    public void criarPagamento(PagamentoDTO req) {
+    public PagamentoModel criarPagamento(PagamentoDTO req) throws ApiExceptionMessage {
 
-        repository.save(new PagamentoModel(req));
+        String cpf = new VerificaCpfCnpj().verificaCpf(req.tipoDocPagador());
+        String cnpj = new VerificaCpfCnpj().verificaCnpj(req.tipoDocPagador());
+
+        if (cpf == null && cnpj == null) {
+            throw new ApiExceptionMessage(HttpStatus.BAD_REQUEST, "É necessário número de Documento válido!");
+        }
+
+        MetodoPagamento metodoPagamento = req.metodoPagamento();
+        if (metodoPagamento.toString().equals("CARTAO_CREDITO") || metodoPagamento.toString().equals("CARTAO_DEBITO")) {
+            if (req.numeroCartao() == null || req.numeroCartao().equals("")) {
+                throw new ApiExceptionMessage(HttpStatus.BAD_REQUEST, "É necessário número de cartão válido!");
+
+            }
+        }
+
+        return repository.save(new PagamentoModel(req));
     }
 
     public PagamentoModel deletarPagamento(Long id) throws ApiExceptionMessage {

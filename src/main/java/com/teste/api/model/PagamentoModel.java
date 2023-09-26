@@ -1,9 +1,12 @@
 package com.teste.api.model;
 
+import org.antlr.v4.runtime.misc.NotNull;
+
 import com.teste.api.dto.PagamentoDTO;
 import com.teste.api.model.enums.MetodoPagamento;
 import com.teste.api.model.enums.StatusPagamento;
 
+import jakarta.annotation.Nullable;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -34,22 +37,23 @@ public class PagamentoModel {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @Column(length = 50, nullable = false)
+    @Column(length = 25, nullable = false, updatable = false)
     private String codigoDebito;
 
-    @Column(length = 14, nullable = true, updatable = false)
+    @Column(length = 14, nullable = false, updatable = false)
     private String tipoDocPagador;
 
-    @Column(nullable = false)
+    @Column(nullable = false, updatable = false)
     private MetodoPagamento metodoPagamento;
 
-    @Column(length = 50)
+    @Column(length = 50, nullable = true, updatable = false)
     private String numeroCartao;
 
-    @Column(length = 50, nullable = false)
+    @Column(length = 50, nullable = false, updatable = false)
     private String valorPagamento;
 
     @Enumerated(EnumType.STRING)
+    @Nullable
     @Column(name = "status", nullable = false)
     private StatusPagamento statusPagamento;
 }
